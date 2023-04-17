@@ -3,9 +3,9 @@ from django.db import models
 
 class Company(models.Model):
     name = models.CharField(max_length=100)
-    provider = models.ForeignKey("self", on_delete=models.CASCADE, null=True, default=None)
+    provider = models.ForeignKey("self", on_delete=models.CASCADE, blank=True, null=True, default=None)
     create_time = models.DateTimeField('time of creation', auto_now_add=True)
-    debt = models.DecimalField(max_digits=10, decimal_places=2, default=100)
+    debt = models.DecimalField(max_digits=10, decimal_places=2, default=100, blank=True)
 
     def __str__(self):
         return f'{self.name}'
@@ -22,7 +22,7 @@ class Employee(models.Model):
 
 class Product(models.Model):
     name = models.CharField(max_length=100)
-    model = models.CharField(max_length=100, default='-')
+    model = models.CharField(max_length=100)
     data = models.DateTimeField('product launch date')
     company = models.ManyToManyField(Company, blank=True, related_name='product', through='Gap')
 
