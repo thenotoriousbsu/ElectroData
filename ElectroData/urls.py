@@ -21,10 +21,12 @@ from basis.views import *
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('companies/', CompanyListView.as_view(), name='company-list'),
-    path('companies/<str:country_name>/', CompanyListByCountry.as_view(), name='company-list-by-country'),
-    path('companies/above_avg/', DebtAboveAVGCompaniesView.as_view(), name='above-avg-companies'),
-    path('company_products/<str:id>/', ProductByCompanyView.as_view(), name='product-by-company'),
+    #path('companies/', UserCompanyListView.as_view(), name='company-by-user-list'),
     path('companies/create/', CompanyCreateView.as_view(), name='company-create'),
+    path('companies/country/<str:country_name>/', CompanyListByCountry.as_view(), name='company-list-by-country'),
+    path('companies/above_avg/', DebtAboveAVGCompaniesView.as_view(), name='above-avg-companies'),
+    path('company/with/products/<str:id>/', ProductByCompanyView.as_view(), name='company-by-product'),
     path('companies/update/<int:pk>/', CompanyUpdateView.as_view(), name='company-update'),
+    path('companies/product_update/<int:pk>/', ProductUpdateView.as_view(), name='product-update'),
     path('companies/delete/<int:pk>/', CompanyDeleteView.as_view(), name='company-delete'),
 ]

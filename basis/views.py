@@ -6,13 +6,21 @@ from django.db.models import Avg
 from .models import *
 from .serializers import *
 from .permissions import *
+import pdb
 
 
 class CompanyListView(ListAPIView):
     permission_classes = [IsActiveUser]
+    serializer_class = CompanySerializer
     queryset = Company.objects.all()
+
+
+class UserCompanyListView(ListAPIView):
+    permission_classes = [IsActiveUser, IsOwner]
     serializer_class = CompanySerializer
 
+    def get_queryset(self):
+        return Company.objects.filter(user_id=self.request.user.id)
 
 class CompanyListByCountry(generics.ListAPIView):
     permission_classes = [IsActiveUser]
@@ -28,9 +36,9 @@ class DebtAboveAVGCompaniesView(generics.ListAPIView):
     serializer_class = CompanySerializer
 
     def get_queryset(self):
+        print(Company.objects.count())
         avg_debt = Company.objects.aggregate(Avg('debt'))['debt__avg']
-        queryset = Company.objects.filter(debt__gt=avg_debt)
-
+        queryset = Company.objects.filter(debt__gte=avg_debt)
         return queryset
 
 
@@ -58,3 +66,9 @@ class CompanyDeleteView(generics.RetrieveDestroyAPIView):
     permission_classes = [IsActiveUser]
     queryset = Company.objects.all()
     serializer_class = CompanySerializer
+
+
+class ProductUpdateView(generics.RetrieveUpdateAPIView):
+    permission_classes = [IsActiveUser]
+    queryset = Product.objects.all()
+    serializer_class = ProductUpdateSerializer

@@ -1,3 +1,5 @@
+import datetime
+from django.utils import timezone
 from rest_framework import serializers
 from .models import *
 
@@ -61,6 +63,18 @@ class CompanyByCountrySerializer(serializers.ModelSerializer):
 
 
 class CompanyUpdateSerializer(CompanySerializer):
+    name = serializers.CharField(max_length=50, required=True)
+
     def update(self, instance, validated_data):
         validated_data.pop('debt', None)  # remove 'debt' field from validated_data
         return super().update(instance, validated_data)
+
+
+class ProductUpdateSerializer(ProductSerializer):
+    name = serializers.CharField(max_length=25, required=True)
+
+    def validate_data(self, data):
+        if data > timezone.now():
+            raise serializers.ValidationError("The date cannot be in the future!")
+        return data
+
