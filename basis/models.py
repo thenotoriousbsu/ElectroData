@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class Company(models.Model):
@@ -6,6 +7,7 @@ class Company(models.Model):
     provider = models.ForeignKey("self", on_delete=models.CASCADE, blank=True, null=True, default=None)
     create_time = models.DateTimeField('time of creation', auto_now_add=True)
     debt = models.DecimalField(max_digits=10, decimal_places=2, default=100, blank=True)
+    user = models.ForeignKey(User, verbose_name='Пользователь', on_delete=models.CASCADE)
 
     def __str__(self):
         return f'{self.name}'

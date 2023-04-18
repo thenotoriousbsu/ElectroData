@@ -5,14 +5,17 @@ from rest_framework.response import Response
 from django.db.models import Avg
 from .models import *
 from .serializers import *
+from .permissions import *
 
 
 class CompanyListView(ListAPIView):
+    permission_classes = [IsActiveUser]
     queryset = Company.objects.all()
     serializer_class = CompanySerializer
 
 
 class CompanyListByCountry(generics.ListAPIView):
+    permission_classes = [IsActiveUser]
     serializer_class = CompanySerializer
 
     def get_queryset(self):
@@ -21,6 +24,7 @@ class CompanyListByCountry(generics.ListAPIView):
 
 
 class DebtAboveAVGCompaniesView(generics.ListAPIView):
+    permission_classes = [IsActiveUser]
     serializer_class = CompanySerializer
 
     def get_queryset(self):
@@ -31,6 +35,7 @@ class DebtAboveAVGCompaniesView(generics.ListAPIView):
 
 
 class ProductByCompanyView(generics.ListAPIView):
+    permission_classes = [IsActiveUser]
     serializer_class = CompanySerializer
 
     def get_queryset(self):
@@ -39,14 +44,17 @@ class ProductByCompanyView(generics.ListAPIView):
 
 
 class CompanyCreateView(CreateAPIView):
+    permission_classes = [IsActiveUser]
     serializer_class = CompanySerializer
 
 
-class CompanyUpdateView(UpdateAPIView):
+class CompanyUpdateView(generics.RetrieveUpdateAPIView):
+    permission_classes = [IsActiveUser]
     queryset = Company.objects.all()
     serializer_class = CompanyUpdateSerializer
 
 
-class CompanyDeleteView(DestroyAPIView):
+class CompanyDeleteView(generics.RetrieveDestroyAPIView):
+    permission_classes = [IsActiveUser]
     queryset = Company.objects.all()
     serializer_class = CompanySerializer
