@@ -15,18 +15,24 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, re_path, include
 from basis.views import *
+# from djoser.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('companies/', CompanyListView.as_view(), name='company-list'),
-    #path('companies/', UserCompanyListView.as_view(), name='company-by-user-list'),
-    path('companies/create/', CompanyCreateView.as_view(), name='company-create'),
     path('companies/country/<str:country_name>/', CompanyListByCountry.as_view(), name='company-list-by-country'),
     path('companies/above_avg/', DebtAboveAVGCompaniesView.as_view(), name='above-avg-companies'),
-    path('company/with/products/<str:id>/', ProductByCompanyView.as_view(), name='company-by-product'),
+    path('companies/with/products/<str:id>/', ProductByCompanyView.as_view(), name='company-list-by-product'),
+    path('companies/create/', CompanyCreateView.as_view(), name='company-create'),
+    path('companies/delete/<int:pk>/', CompanyDeleteView.as_view(), name='company-delete'),
     path('companies/update/<int:pk>/', CompanyUpdateView.as_view(), name='company-update'),
     path('companies/product_update/<int:pk>/', ProductUpdateView.as_view(), name='product-update'),
-    path('companies/delete/<int:pk>/', CompanyDeleteView.as_view(), name='company-delete'),
+    path('company/<int:pk>/', CompanyInfoView.as_view(), name='users-companies'),
+    # path('my/companies/', UserCompanyListView.as_view(), name='company-by-user-list'),
+
+    # path('qr-code/', QRCodeView.as_view(), name='qr-code'),
+    # path('companies/auth/', include('djoser.urls')),
+    # re_path(r'^auth', include('djoser.urls.jwt')),
 ]

@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'basis',
     'rest_framework',
+    'rest_framework.authtoken',
+    'djoser',
 ]
 
 MIDDLEWARE = [
@@ -129,3 +131,28 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# REST_FAMEWORK = {
+#     'DEFAULT_AUTHENTICATION_CLASSES': [
+#         'rest_framework_simplejwt.authentication.JWTAuthentication',
+#     ]
+# }
+#
+# DJOSER = {
+#     'SERIALIZERS': {
+#         'user_create': 'myapp.serializers.UserCreateSerializer',
+#         'user': 'myapp.serializers.UserSerializer',
+#         'current_user': 'myapp.serializers.UserSerializer',
+#     },
+#     'PERMISSIONS': {
+#         'user': ['rest_framework.permissions.IsAuthenticated'],
+#         'user_list': ['rest_framework.permissions.AllowAny'],
+#     },
+#     'SEND_ACTIVATION_EMAIL': False,
+#     'SEND_CONFIRMATION_EMAIL': False,
+#     'PASSWORD_RESET_CONFIRM_URL': 'password/reset/confirm/{uid}/{token}',
+#     'USERNAME_RESET_CONFIRM_URL': 'username/reset/confirm/{uid}/{token}',
+#     'ACTIVATION_URL': 'activate/{uid}/{token}',
+#     'PASSWORD_CHANGED_EMAIL_CONFIRMATION': True,
+#     'TOKEN_MODEL': 'djoser.models.Token',
+# }

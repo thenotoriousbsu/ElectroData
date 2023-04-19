@@ -15,12 +15,40 @@ class CompanyListView(ListAPIView):
     queryset = Company.objects.all()
 
 
-class UserCompanyListView(ListAPIView):
-    permission_classes = [IsActiveUser, IsOwner]
+class CompanyInfoView(ListAPIView):
+    permission_classes = [IsActiveUser]
     serializer_class = CompanySerializer
 
     def get_queryset(self):
-        return Company.objects.filter(user_id=self.request.user.id)
+        return Company.objects.filter(user_id=self.request.user)
+
+
+# class UserCompanyListView(ListAPIView):
+#     queryset = Company.objects.all()
+#     permission_classes = [IsActiveUser]
+#     serializer_class = CompanySerializer
+
+
+
+# class QRCodeView(APIView):
+#     def post(self, request):
+#         name = request.data.get('name')
+#         email = request.data.get('email')
+#         phone = request.data.get('phone')
+#
+#         data = f"Name: {name}\nEmail: {email}\nPhone: {phone}"
+#         img = qrcode.make(data)
+#
+#         subject = 'QR Code'
+#         body = 'Please find your QR code attached.'
+#         to = [email]
+#         qr_code_file = img.save('qr_code.png')
+#         email = EmailMessage(subject, body, to=to)
+#         email.attach_file(qr_code_file)
+#         email.send()
+#
+#         return Response({'message': 'QR code sent to email'})
+
 
 class CompanyListByCountry(generics.ListAPIView):
     permission_classes = [IsActiveUser]
@@ -72,3 +100,10 @@ class ProductUpdateView(generics.RetrieveUpdateAPIView):
     permission_classes = [IsActiveUser]
     queryset = Product.objects.all()
     serializer_class = ProductUpdateSerializer
+
+#
+# class UserCreateAPIView(generics.CreateAPIView):
+#     serializer_class = CustomUserCreateSerializer
+#     permission_classes = [IsActiveUser, IsOwner]
+#     queryset = Company.objects.all()
+

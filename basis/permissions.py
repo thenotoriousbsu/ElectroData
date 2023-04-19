@@ -5,7 +5,6 @@ class IsActiveUser(BasePermission):
         return request.user and request.user.is_active
 
 
-class IsOwner(BasePermission):
-    def has_object_permission(self, request, view, obj):
-        # Check if the object's owner matches the authenticated user
-        return obj.owner == request.user
+# class IsOwner(BasePermission):
+#     def has_object_permission(self, request, view, obj):
+#         return obj.user_id == request.user
